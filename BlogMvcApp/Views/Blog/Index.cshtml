@@ -1,0 +1,106 @@
+﻿@model IEnumerable<BlogMvcApp.Models.Blog>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Blog Listesi</h2>
+<hr />
+<p>
+    @Html.ActionLink("Yeni Blog ekle", "Create",null,new { @class="btn btn-primary"})
+</p>
+<hr />
+
+@if (TempData["Blog"] != null)
+{
+    var blog =(BlogMvcApp.Models.Blog)TempData["Blog"];
+
+<div class="alert alert-success" role="alert">
+    <strong><span class="glyphicon glyphicon-ok"></span> @blog.Baslik</strong>Kayit Edildi.
+
+</div>
+}
+
+<div class="table-responsive-md">
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.Category.KategoriAdi)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.Baslik)
+                </th>
+
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.Resim)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.Icerik)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.EklemeTarihi)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.Onay)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.Anasayfa)
+                </th>
+                <th scope="col" style="width:20%;"></th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.Category.KategoriAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Baslik)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Resim)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Icerik)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EklemeTarihi)
+                </td>
+                <td>
+                    @if (item.Onay)
+                    {
+                        <label class="label label-success">Onaylı</label>
+                    }
+                    else
+                    {
+                        <label class="label label-danger">Onay Bekliyor</label>
+                    }
+
+
+                </td>
+                <td>
+                    @if (item.Anasayfa)
+                    {
+
+                        <label class="label label-success">Anasayfa</label>
+                    }
+                    else
+                    {
+                        <label class="label label-danger">Anasayfa Degil</label>
+                    }
+                </td>
+                <td> @* burda id lerle hangi veri  gondercegimiz belirliyoruz *@
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-xs" }) |
+                  
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-xs" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
